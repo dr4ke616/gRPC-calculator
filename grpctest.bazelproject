@@ -1,0 +1,12 @@
+directories:
+  grpctest
+  lib
+
+# test_sources:
+#   test
+
+workspace_type: java
+java_language_level: 8
+
+additional_languages:
+  scala
