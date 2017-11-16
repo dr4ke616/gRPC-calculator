@@ -1,8 +1,27 @@
 package client
 
-func Test() (string, error) {
+import (
+	"log"
 
-	some_string := "hello go"
+	pb "github.com/dr4ke616/grpc-test/proto"
 
-	return some_string, nil
+	"golang.org/x/net/context"
+	"google.golang.org/grpc"
+)
+
+func Call(address string, nameIn string) {
+
+	conn, err := grpc.Dial(address, grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("Connection failure: %v", err)
+	}
+	defer conn.Close()
+
+	c := pb.NewGreeterClient(conn)
+	r, err := c.SayHello(context.Background(), &pb.HelloRequest{Name: nameIn})
+	if err != nil {
+		log.Fatalf("could not greet: %v", err)
+	}
+	log.Printf("Greeting: %s", r.Message)
+
 }

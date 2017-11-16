@@ -13,8 +13,8 @@ import (
 
 type Server struct{}
 
-// SayHello implements helloworld.GreeterServer
 func (s *Server) SayHello(ctx context.Context, in *pb.HelloRequest) (*pb.HelloReply, error) {
+	log.Printf("Handling incoming request on SayHello")
 	return &pb.HelloReply{Message: "Hello " + in.Name}, nil
 }
 
