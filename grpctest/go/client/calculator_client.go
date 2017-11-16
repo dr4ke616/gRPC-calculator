@@ -3,13 +3,13 @@ package client
 import (
 	"log"
 
-	pb "github.com/dr4ke616/grpc-test/proto"
+	pb "github.com/dr4ke616/grpctest/proto/calculator"
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 )
 
-func Call(address string, nameIn string) {
+func Calculate(address string, expression string) string {
 
 	conn, err := grpc.Dial(address, grpc.WithInsecure())
 	if err != nil {
@@ -17,11 +17,11 @@ func Call(address string, nameIn string) {
 	}
 	defer conn.Close()
 
-	c := pb.NewGreeterClient(conn)
-	r, err := c.SayHello(context.Background(), &pb.HelloRequest{Name: nameIn})
+	c := pb.NewCalculatorClient(conn)
+	r, err := c.Evaluate(context.Background(), &pb.ExpressionRequest{Expr: expression})
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}
-	log.Printf("Greeting: %s", r.Message)
+	return r.Answer
 
 }
