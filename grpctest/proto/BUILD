@@ -18,5 +18,6 @@ go_proto_library(  # noqa
     name="helloworld_go_proto",
     protos=["helloworld.proto"],
     with_grpc=True,
-    importpath="github.com/dr4ke616/grpc-test/proto"
+    importpath="github.com/dr4ke616/grpc-test/proto",
+    visibility=["//visibility:public"],
 )

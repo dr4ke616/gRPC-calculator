@@ -6,7 +6,8 @@ go_binary(  # noqa
         "main.go"
     ],
     deps=[
-        "//grpctest/go/client"
+        "//grpctest/go/client",
+        "//grpctest/go/server",
     ],
     importpath="github.com/dr4ke616/grpc-test",
 )
