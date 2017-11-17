@@ -1,20 +1,3 @@
-#
-# Proto
-#
-new_local_repository(  # noqa
-    name="com_google_protobuf",
-    path="third_party/protobuf",
-    build_file="third_party/protobuf/com_google_protobuf.BUILD",
-)
-
-new_local_repository(  # noqa
-    name="com_google_protobuf_java",
-    path="third_party/protobuf",
-    build_file="third_party/protobuf/com_google_protobuf_java.BUILD",
-)
-
-maven_jar(name="protoc_jar", artifact="com.github.os72:protoc-jar:3.2.0")  # noqa
-maven_jar(name="protobuf_java", artifact="com.google.protobuf:protobuf-java:3.2.0")  # noqa
 
 #
 # Scala
@@ -67,3 +50,9 @@ maven_jar(name="grpc_core", artifact="io.grpc:grpc-core:1.7.0")   # noqa
 maven_jar(name="grpc_netty", artifact="io.grpc:grpc-netty:1.7.0")   # noqa
 maven_jar(name="grpc_protobuf", artifact="io.grpc:grpc-protobuf:1.7.0")   # noqa
 maven_jar(name="grpc_stub", artifact="io.grpc:grpc-stub:1.7.0")   # noqa
+
+#
+# Proto
+#
+maven_jar(name="protoc_jar", artifact="com.github.os72:protoc-jar:3.2.0")  # noqa
+maven_jar(name="protobuf_java", artifact="com.google.protobuf:protobuf-java:3.2.0")  # noqa
