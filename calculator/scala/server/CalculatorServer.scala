@@ -3,63 +3,62 @@ package server
 import java.util.logging.Logger
 import javax.script.ScriptEngineManager
 
-import io.grpc.Server
-import protogen.calculator.{CalculatorGrpc, ExpressionAnswer, ExpressionRequest}
 import io.grpc.{Server, ServerBuilder}
+import protogen.calculator.{CalculatorGrpc, ExpressionAnswer, ExpressionRequest}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 
 object CalculatorServer {
 
- private implicit val log: Logger =
-   Logger.getLogger(classOf[CalculatorServer].getName)
+  private implicit val log: Logger =
+    Logger.getLogger(classOf[CalculatorServer].getName)
 
- def start(port: Int)(implicit ex: ExecutionContext): CalculatorServer = {
-   val server = new CalculatorServer(port)
-   server.start()
-   server
- }
+  def start(port: Int)(implicit ex: ExecutionContext): CalculatorServer = {
+    val server = new CalculatorServer(port)
+    server.start()
+    server
+  }
 }
 
 private[server] class CalculatorServer(port: Int)(implicit ex: ExecutionContext, log: Logger) {
- self ⇒
+  self ⇒
 
- private[this] var _server: Server = _
+  private def server: Server =
+    ServerBuilder
+      .forPort(port)
+      .addService(CalculatorGrpc.bindService(new CalculatorImpl(), ex))
+      .build
 
- private[server] def start(): Unit = {
-   _server = ServerBuilder
-     .forPort(port)
-     .addService(CalculatorGrpc.bindService(new CalculatorImpl(), ex))
-     .build
-     .start
+  private var proc: Option[Server] = None
 
-   log.info(s"Starting Calculator server on $port...")
+  private[server] def start(): Unit = {
 
-   sys.addShutdownHook {
-     log.info(s"Shutting down Calculator server...")
-     self.stop()
-   }
- }
+    log.info(s"Starting Calculator server on $port...")
+    proc = Some(server.start())
 
- private def stop(): Unit = if (_server != null) {
-   _server.shutdown()
- }
+    sys.addShutdownHook {
+      log.info(s"Shutting down Calculator server...")
+      self.stop()
+    }
+  }
 
- def blockUntilShutdown(): Unit = if (_server != null) {
-   _server.awaitTermination()
- }
+  private def stop(): Unit =
+    proc.fold()(_.shutdown)
 
- private class CalculatorImpl extends CalculatorGrpc.Calculator {
+  def blockUntilShutdown(): Unit =
+    proc.fold()(_.awaitTermination)
+}
 
-   private val jsEngine =
-     new ScriptEngineManager()
-       .getEngineByMimeType("text/javascript")
+private[server] class CalculatorImpl()(implicit log: Logger) extends CalculatorGrpc.Calculator {
 
-   override def evaluate(request: ExpressionRequest): Future[ExpressionAnswer] =
-     Future.successful {
-       log.info("Handling incoming evaluation request")
-       ExpressionAnswer(jsEngine.eval(request.expr).toString)
-     }
- }
+  private val jsEngine =
+    new ScriptEngineManager()
+      .getEngineByMimeType("text/javascript")
+
+  override def evaluate(request: ExpressionRequest): Future[ExpressionAnswer] =
+    Future.successful {
+      log.info("Handling incoming evaluation request")
+      ExpressionAnswer(jsEngine.eval(request.expr).toString)
+    }
 }
