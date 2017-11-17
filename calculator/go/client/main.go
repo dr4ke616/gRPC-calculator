@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/dr4ke616/grpc-test/client"
+	"github.com/dr4ke616/calculator/client"
 )
 
 func main() {

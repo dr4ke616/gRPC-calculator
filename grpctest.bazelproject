@@ -1,5 +1,5 @@
 directories:
-  grpctest
+  calculator
   lib
 
 # test_sources:

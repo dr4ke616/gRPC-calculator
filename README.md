@@ -20,5 +20,5 @@ bazel build "..."
 Using `bazel` to run:
 
 ```bash
-bazel run //grpctest/scala/helloworld
+bazel run //calculator/scala/helloworld
 ```

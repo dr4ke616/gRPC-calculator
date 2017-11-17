@@ -6,7 +6,7 @@ scala_library(  # noqa
         "CalculatorServer.scala",
     ],
     deps=[
-        "//grpctest/proto:calculator_scala_proto",
+        "//calculator/proto:calculator_scala_proto",
     ],
     visibility=["//visibility:public"],
 )
@@ -16,7 +16,7 @@ scala_binary(  # noqa
     srcs=["Main.scala"],
     deps=[
         ":server",
-        "//grpctest/proto:calculator_scala_proto",
+        "//calculator/proto:calculator_scala_proto",
     ],
     runtime_deps=[],
     main_class="server.Main",

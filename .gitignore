@@ -28,3 +28,4 @@ bazel-*
 
 # Sublime
 *.sublime-project
+.DS_Store

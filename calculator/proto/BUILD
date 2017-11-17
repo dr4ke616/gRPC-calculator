@@ -18,6 +18,6 @@ go_proto_library(  # noqa
     name="calculator_go_proto",
     protos=["calculator.proto"],
     with_grpc=True,
-    importpath="github.com/dr4ke616/grpctest/proto/calculator",
+    importpath="github.com/dr4ke616/protogen/calculator",
     visibility=["//visibility:public"],
 )

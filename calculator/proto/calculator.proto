@@ -1,20 +1,17 @@
 syntax = "proto3";
 
-option java_package = "grpctest.proto";
-option java_outer_classname = "CalculatorProto";
+option java_package = "protogen";
 
-package proto;
+package protogen;
 
 service Calculator {
   rpc Evaluate (ExpressionRequest) returns (ExpressionAnswer) {}
 }
 
-// The request message containing the user's name.
 message ExpressionRequest {
   string expr = 1;
 }
 
-// The response message containing the greetings
 message ExpressionAnswer {
   string answer = 1;
 }
