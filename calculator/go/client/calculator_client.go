@@ -9,13 +9,11 @@ import (
 	"google.golang.org/grpc"
 )
 
-func Calculate(address string, expression string) string {
+func Connect(address string) (*grpc.ClientConn, error) {
+	return grpc.Dial(address, grpc.WithInsecure())
+}
 
-	conn, err := grpc.Dial(address, grpc.WithInsecure())
-	if err != nil {
-		log.Fatalf("Connection failure: %v", err)
-	}
-	defer conn.Close()
+func Calculate(conn *grpc.ClientConn, expression string) string {
 
 	c := pb.NewCalculatorClient(conn)
 	r, err := c.Evaluate(context.Background(), &pb.ExpressionRequest{Expr: expression})
