@@ -2,7 +2,7 @@
 #
 # Scala
 #
-rules_scala_version = "85308acbd316477f3072e033e7744debcba4f054"
+rules_scala_version = "6f398b13a962b47d4497aa96a892c3c15933036e"
 http_archive(  # noqa
     name="io_bazel_rules_scala",
     url="https://github.com/bazelbuild/rules_scala/archive/{}.zip".format(
@@ -42,17 +42,5 @@ go_proto_repositories()  # noqa
 load("@io_bazel_rules_go//proto:def.bzl", "proto_register_toolchains")  # noqa
 proto_register_toolchains()  # noqa
 
-
-#
-# GRPC
-#
-maven_jar(name="grpc_core", artifact="io.grpc:grpc-core:1.7.0")   # noqa
-maven_jar(name="grpc_netty", artifact="io.grpc:grpc-netty:1.7.0")   # noqa
-maven_jar(name="grpc_protobuf", artifact="io.grpc:grpc-protobuf:1.7.0")   # noqa
-maven_jar(name="grpc_stub", artifact="io.grpc:grpc-stub:1.7.0")   # noqa
-
-#
-# Proto
-#
-maven_jar(name="protoc_jar", artifact="com.github.os72:protoc-jar:3.2.0")  # noqa
-maven_jar(name="protobuf_java", artifact="com.google.protobuf:protobuf-java:3.2.0")  # noqa
+load("@org_pubref_rules_protobuf//grpc_gateway:rules.bzl", "grpc_gateway_proto_repositories")  # noqa
+grpc_gateway_proto_repositories()  # noqa

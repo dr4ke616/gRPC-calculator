@@ -6,10 +6,7 @@ pkg_tar(  # noqa
         "//calculator/scala/server",
         "//calculator/scala/client",
         "//calculator/proto:calculator_scala_proto",
-        "@protobuf_java//jar:file",
-        "@grpc_core//jar:file",
-        "@grpc_netty//jar:file",
-        "@grpc_protobuf//jar:file",
-        "@grpc_stub//jar:file",
+        "@scalac_rules_protobuf_java//jar",
+        "@scala_proto_rules_scalapb_runtime_grpc//jar",
     ]
 )
