@@ -1,17 +1,18 @@
 syntax = "proto3";
 
 option java_package = "protogen";
+option go_package = "github.com/dr4ke616/protogen/calculator";
 
 package protogen;
 
 service Calculator {
-  rpc Evaluate (ExpressionRequest) returns (ExpressionAnswer) {}
+    rpc Evaluate (ExpressionRequest) returns (ExpressionAnswer) {}
 }
 
 message ExpressionRequest {
-  string expr = 1;
+    string expr = 1;
 }
 
 message ExpressionAnswer {
-  string answer = 1;
+    string answer = 1;
 }
